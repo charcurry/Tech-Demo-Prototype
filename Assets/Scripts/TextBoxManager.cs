@@ -12,15 +12,12 @@ public class TextBoxManager : MonoBehaviour
     public int currentLine;
     public int endAtLine;
 
-    public GameObject choice1;
-    public GameObject choice2;
-
     //public GameObject winTextObject;
     //public GameObject continueButton;
 
     //public ActivateTextNPCWin NPC;
 
-    //public PlayerController player;
+    public CharacterController player;
     //public PickupController pickupController;
 
     //public AudioSource audioSource;
@@ -33,6 +30,7 @@ public class TextBoxManager : MonoBehaviour
     public string[] textLines;
 
     public bool isActive;
+    public bool canMove;
 
     public bool isTyping = false;
     private bool cancelTyping = false;
@@ -43,8 +41,6 @@ public class TextBoxManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        choice1.SetActive(false);
-        choice2.SetActive(false);
 
         //player = FindObjectOfType<PlayerController>();
 
@@ -70,16 +66,16 @@ public class TextBoxManager : MonoBehaviour
 
     private void Update()
     {
-        //if (player.canMove == false)
-        //{
-        //    rb.isKinematic = true;
-        //}
-        //else if (player.canMove == true)
-        //{
-        //    rb.isKinematic = false;
-        //}
+        if (canMove == false)
+        {
+            player.enabled = false;
+        }
+        else if (canMove == true)
+        {
+            player.enabled = true;
+        }
 
-        if (Input.GetKeyDown(KeyCode.Return) && textBox.activeSelf)
+        if (Input.GetButtonDown("Continue") && textBox.activeSelf)
         {
             if (!isTyping)
             {
@@ -115,17 +111,7 @@ public class TextBoxManager : MonoBehaviour
             yield return new WaitForSeconds(typeSpeed);
         }
         theText.text = lineOfText;
-        //isTyping = false;
-        if (currentLine == endAtLine)
-        {
-            isTyping = true;
-            choice1.SetActive(true);
-            choice2.SetActive(true);
-        }
-        else
-        {
-            isTyping = false;
-        }
+        isTyping = false;
         cancelTyping = false;
     }
 
@@ -136,7 +122,7 @@ public class TextBoxManager : MonoBehaviour
 
         if (stopPlayerMovement)
         {
-            //player.canMove = false;
+            canMove = false;
         }
 
         StartCoroutine(TextScroll(textLines[currentLine]));
@@ -146,7 +132,7 @@ public class TextBoxManager : MonoBehaviour
     {
         textBox.SetActive(false);
         isActive = false;
-        //player.canMove = true;
+        canMove = true;
     }
 
     //public void PlayTalkSound(ActivateTextNPCWin NPC)

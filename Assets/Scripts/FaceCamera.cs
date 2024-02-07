@@ -8,17 +8,17 @@ public class FaceCamera : MonoBehaviour
 
     public Camera cameraToLookAt;
     private Vector3 offset;
-    public int distanceAbovePlayer;
-    public GameObject player; 
+    public float distanceAboveCharacter;
+    public GameObject NPC; 
 
     private void Start()
     {
-        offset = new Vector3 (0, distanceAbovePlayer, 0);
+        offset = new Vector3 (0 , distanceAboveCharacter, 0);
     }
     // Update is called once per frame
     void LateUpdate()
     {
-        transform.position = player.transform.position + offset;
+        transform.position = NPC.transform.position + offset;
         transform.LookAt(cameraToLookAt.transform);
         transform.rotation = Quaternion.LookRotation(cameraToLookAt.transform.forward);
     }

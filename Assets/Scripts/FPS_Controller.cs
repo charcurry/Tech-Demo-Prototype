@@ -79,7 +79,7 @@ public class FPS_Controller : MonoBehaviour
 
         if (Input.GetButton("Sprint") && isGrounded && !crouching)
         {
-            Debug.Log("sprint");
+            //Debug.Log("sprint");
             speed = sprintSpeed;
             sprinting = true;
         }
