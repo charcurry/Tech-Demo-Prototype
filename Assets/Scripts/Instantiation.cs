@@ -4,22 +4,26 @@ using UnityEngine;
 
 public class Instantiation : MonoBehaviour
 {
+    public GameObject prefabToSpawn;
+    public float timeAlive = 10f;
+    public float timeDead = 5f;
 
-    public GameObject prefab;
-    // Start is called before the first frame update
     void Start()
     {
-        GameObject cube;
-        GameObject newObject;
-        cube = GameObject.CreatePrimitive(PrimitiveType.Cube);
-        //newObject = GameObject.Instantiate(prefab);
-
-        cube.GetComponent<Renderer>().material.SetColor("_Color", Color.red);
+        StartCoroutine(SpawnPrefab());
     }
 
-    // Update is called once per frame
-    void Update()
+    IEnumerator SpawnPrefab()
     {
-        
+        while (true)
+        {
+            GameObject spawnedPrefab = Instantiate(prefabToSpawn, new Vector3(5,5,5), Quaternion.identity);
+
+            yield return new WaitForSeconds(timeAlive);
+
+            Destroy(spawnedPrefab);
+
+            yield return new WaitForSeconds(timeDead);
+        }
     }
 }
