@@ -8,7 +8,7 @@ public class Teleportation : MonoBehaviour
     public GameObject player;
     public float heightOffset = 1;
     public bool arrived;
-    public string tag;
+    public string gameObjectTag;
     // Start is called before the first frame update
     void Start()
     {
@@ -25,9 +25,9 @@ public class Teleportation : MonoBehaviour
     {
         if (!arrived)
         {
-            if (tag != "")
+            if (gameObjectTag != "")
             {
-                if (other.gameObject.CompareTag(tag))
+                if (other.gameObject.CompareTag(gameObjectTag))
                 {
                     other.transform.position = destination.position + new Vector3(0, heightOffset, 0);
                     destination.GetComponent<Teleportation>().arrived = true;
