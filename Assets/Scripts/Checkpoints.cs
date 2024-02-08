@@ -8,32 +8,31 @@ using UnityEngine.UIElements;
 
 public class Checkpoints : MonoBehaviour
 {
+    public Material activated;
+    public Material deactivated;
+
+    [SerializeField] private GameObject[] checkpoints;
+    [SerializeField] private GameObject currentCheckpoint;
 
     private Vector3 initialPosition;
-    [SerializeField] private Vector3 checkpointPosition;
-
 
     // Start is called before the first frame update
     void Start()
     {
-        //Time.timeScale = 1f;
+        checkpoints = GameObject.FindGameObjectsWithTag("Checkpoint");
         initialPosition = transform.position;
     }
 
     void OnDeath()
     {
-        if (checkpointPosition != null)
+        if (currentCheckpoint.transform.position != null)
         {
-            transform.position = checkpointPosition;
+            transform.position = currentCheckpoint.transform.position;
         }
         else
         {
             transform.position = initialPosition;
         }
-    }
-
-    private void Update()
-    {
     }
 
     private void OnTriggerEnter(Collider other)
@@ -45,7 +44,22 @@ public class Checkpoints : MonoBehaviour
 
         if (other.gameObject.CompareTag("Checkpoint"))
         {
-            checkpointPosition = other.transform.position;
+            foreach (var checkpoint in checkpoints)
+            {
+                if (currentCheckpoint == null)
+                {
+                    currentCheckpoint = other.gameObject;
+                    currentCheckpoint.transform.position = other.transform.position;
+                    other.GetComponent<Renderer>().material = activated;
+                }
+                else if (checkpoint != currentCheckpoint)
+                {
+                    currentCheckpoint.GetComponent<Renderer>().material = deactivated;
+                    currentCheckpoint = other.gameObject;
+                    currentCheckpoint.transform.position = other.transform.position;
+                    other.GetComponent<Renderer>().material = activated;
+                }
+            }
         }
     }
 }
