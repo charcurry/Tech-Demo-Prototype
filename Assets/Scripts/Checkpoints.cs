@@ -25,13 +25,13 @@ public class Checkpoints : MonoBehaviour
 
     void OnDeath()
     {
-        if (currentCheckpoint.transform.position != null)
-        {
-            transform.position = currentCheckpoint.transform.position;
-        }
-        else
+        if (currentCheckpoint == null)
         {
             transform.position = initialPosition;
+        }
+        else if (currentCheckpoint.transform.position != null)
+        {
+            transform.position = currentCheckpoint.transform.position;
         }
     }
 

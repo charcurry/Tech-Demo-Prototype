@@ -7,6 +7,7 @@ TagManager:
   - Kill Box
   - Checkpoint
   - Pickup
+  - Waypoint
   layers:
   - Default
   - TransparentFX
