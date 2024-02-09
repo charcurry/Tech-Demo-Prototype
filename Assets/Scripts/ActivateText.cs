@@ -90,6 +90,7 @@ public class ActivateText : MonoBehaviour
         if (other.name == "Player")
         {
             buttonPrompt.SetActive(false);
+            theTextBox.DisableTextBox();
             waitForPress = false;
         }
     }
